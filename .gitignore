@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.venv/
+.venv_win/
+venv/
+ENV/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+syslog
+kern.log
+
+# Temporary files
+*.tmp
+*~
+.DS_Store
+Thumbs.db
+
+# Word documents (test files - opcional, puedes comentar si quieres subirlos)
+*.docx
+*.doc
+
+# Images (test files - opcional, puedes comentar si quieres subirlas)
+# *.png
+# *.jpg
+# *.jpeg
+
+# Specific temp files
+borrar.docx
+temp/
+tmp/
+
+# PyInstaller
+*.spec
+
+# Claude conversations (opcional - puedes comentar si quieres subirlo)
+.claude/
