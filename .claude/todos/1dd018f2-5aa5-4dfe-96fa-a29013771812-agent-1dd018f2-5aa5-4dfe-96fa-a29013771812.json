@@ -1,0 +1,32 @@
+[
+  {
+    "content": "Refactorizar action_replace_text_with_image.py para usar solo python-docx",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Eliminar uso de xpath y manipulaciones XML externas",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Crear implementación limpia usando solo python-docx APIs",
+    "status": "completed",
+    "priority": "high",
+    "id": "3"
+  },
+  {
+    "content": "Probar la nueva implementación con imágenes",
+    "status": "in_progress",
+    "priority": "medium",
+    "id": "4"
+  },
+  {
+    "content": "Activar en main.py si las pruebas son exitosas",
+    "status": "pending",
+    "priority": "medium",
+    "id": "5"
+  }
+]

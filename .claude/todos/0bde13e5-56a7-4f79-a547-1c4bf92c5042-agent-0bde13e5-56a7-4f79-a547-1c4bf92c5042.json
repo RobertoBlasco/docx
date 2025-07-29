@@ -1,0 +1,38 @@
+[
+  {
+    "content": "Analizar main.py para entender el flujo actual",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Diseñar función process_xml_data() en dataStorage.py",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Añadir función para generar MD5 y medir tiempos",
+    "status": "completed",
+    "priority": "high",
+    "id": "3"
+  },
+  {
+    "content": "Modificar process_xml_data() para regenerar MD5 si hay contenido",
+    "status": "completed",
+    "priority": "high",
+    "id": "4"
+  },
+  {
+    "content": "Crear test para la nueva función process_xml_data() con MD5",
+    "status": "completed",
+    "priority": "high",
+    "id": "5"
+  },
+  {
+    "content": "Integrar llamada simple en main.py",
+    "status": "pending",
+    "priority": "medium",
+    "id": "6"
+  }
+]

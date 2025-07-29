@@ -1,0 +1,26 @@
+[
+  {
+    "content": "Verificar parsing del XML para acciones de reemplazo de texto",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Revisar la ejecución del reemplazo en main.py",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Verificar la implementación de replaceTextWithText",
+    "status": "completed",
+    "priority": "high",
+    "id": "3"
+  },
+  {
+    "content": "Arreglar el flujo para que no se pierdan los cambios de texto",
+    "status": "completed",
+    "priority": "high",
+    "id": "4"
+  }
+]

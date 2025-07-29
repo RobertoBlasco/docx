@@ -1,0 +1,26 @@
+[
+  {
+    "content": "Crear archivo .gitignore para excluir .venv",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Crear archivo requirements.txt",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Eliminar .venv del repositorio",
+    "status": "completed",
+    "priority": "high",
+    "id": "3"
+  },
+  {
+    "content": "Hacer commit con los cambios",
+    "status": "completed",
+    "priority": "high",
+    "id": "4"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "content": "Analyze current XML parsing logic in config.py",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Update _parseAction method to only handle setBookmarkFormField and replaceTextWithText",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Test the updated parsing logic",
+    "status": "completed",
+    "priority": "medium",
+    "id": "3"
+  }
+]

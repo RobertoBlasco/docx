@@ -1,0 +1,26 @@
+[
+  {
+    "content": "Crear fichero de test test_with_actionxml.py",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Implementar tests para fileIn con XML real",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Implementar tests para imágenes con XML real",
+    "status": "completed",
+    "priority": "high",
+    "id": "3"
+  },
+  {
+    "content": "Añadir verificaciones y casos edge",
+    "status": "completed",
+    "priority": "medium",
+    "id": "4"
+  }
+]

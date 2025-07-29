@@ -1,0 +1,26 @@
+[
+  {
+    "content": "Instalar polyfills necesarios para webpack",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Separar lógica de Node.js del navegador",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Actualizar InventarioService para usar solo repositorio browser",
+    "status": "completed",
+    "priority": "medium",
+    "id": "3"
+  },
+  {
+    "content": "Corregir errores de compilación",
+    "status": "completed",
+    "priority": "medium",
+    "id": "4"
+  }
+]

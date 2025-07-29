@@ -1,0 +1,14 @@
+[
+  {
+    "content": "Analizar el problema con SearchAllForContent cuando no encuentra FORMCHECKBOX",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Implementar xml.GetRoot2() cuando búsqueda falla",
+    "status": "in_progress",
+    "priority": "high",
+    "id": "2"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "content": "Agregar configuración para elegir entre memoria o archivos temporales",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Implementar función con BytesIO para procesamiento en memoria",
+    "status": "pending",
+    "priority": "medium",
+    "id": "2"
+  },
+  {
+    "content": "Implementar función con archivos temporales",
+    "status": "pending",
+    "priority": "medium",
+    "id": "3"
+  },
+  {
+    "content": "Refactorizar main.py para usar la configuración",
+    "status": "in_progress",
+    "priority": "high",
+    "id": "4"
+  }
+]

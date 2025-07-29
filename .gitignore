@@ -61,4 +61,4 @@ tmp/
 *.spec
 
 # Claude conversations (opcional - puedes comentar si quieres subirlo)
-.claude/
+# .claude/

@@ -1,0 +1,26 @@
+[
+  {
+    "content": "Create ActionReplaceTextWithImage2.py with full implementation",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Implement image loading for FILE://, BASE64://, and URL:// sources",
+    "status": "in_progress",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Implement text replacement with image insertion in paragraphs",
+    "status": "pending",
+    "priority": "high",
+    "id": "3"
+  },
+  {
+    "content": "Test the complete implementation",
+    "status": "pending",
+    "priority": "high",
+    "id": "4"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "content": "Eliminar las imágenes Docker existentes (huib y huib-ui)",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Modificar package.json para usar nombre huib-ui-ufd",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Actualizar .gitlab-ci.yml para usar nuevo nombre",
+    "status": "completed",
+    "priority": "high",
+    "id": "3"
+  },
+  {
+    "content": "Construir nueva imagen con nombre correcto",
+    "status": "completed",
+    "priority": "medium",
+    "id": "4"
+  }
+]

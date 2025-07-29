@@ -1,0 +1,44 @@
+[
+  {
+    "content": "Revisar la estructura actual del proyecto",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Identificar errores y problemas en el código",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Analizar los cambios realizados para mejorar claridad y escalabilidad",
+    "status": "completed",
+    "priority": "medium",
+    "id": "3"
+  },
+  {
+    "content": "Corregir error de enum en main.py línea 124",
+    "status": "pending",
+    "priority": "high",
+    "id": "4"
+  },
+  {
+    "content": "Corregir comilla extra en action.xml línea 5",
+    "status": "pending",
+    "priority": "medium",
+    "id": "5"
+  },
+  {
+    "content": "Añadir soporte para setBookmarkFormField en parser",
+    "status": "pending",
+    "priority": "medium",
+    "id": "6"
+  },
+  {
+    "content": "Corregir error de atributo en XmlActions.py línea 52",
+    "status": "pending",
+    "priority": "low",
+    "id": "7"
+  }
+]

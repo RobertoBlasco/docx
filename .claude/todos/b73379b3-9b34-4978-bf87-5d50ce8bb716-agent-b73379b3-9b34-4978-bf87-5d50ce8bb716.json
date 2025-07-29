@@ -1,0 +1,32 @@
+[
+  {
+    "content": "Analizar la estructura actual del proyecto y problemas de importación",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Revisar archivos Python y dependencias",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Crear __init__.py donde sea necesario",
+    "status": "completed",
+    "priority": "medium",
+    "id": "3"
+  },
+  {
+    "content": "Corregir imports problemáticos",
+    "status": "completed",
+    "priority": "high",
+    "id": "4"
+  },
+  {
+    "content": "Instalar dependencias Python",
+    "status": "pending",
+    "priority": "medium",
+    "id": "5"
+  }
+]

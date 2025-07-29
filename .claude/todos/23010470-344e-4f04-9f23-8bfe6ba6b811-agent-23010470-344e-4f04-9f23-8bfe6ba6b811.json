@@ -1,0 +1,14 @@
+[
+  {
+    "content": "Re-examine repository structure after file renames",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Update CLAUDE.md with corrected module names and structure",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  }
+]

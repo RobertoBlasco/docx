@@ -1,0 +1,14 @@
+[
+  {
+    "content": "Desarrollar funcionalidad de action_replace_text_with_image",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "RECORDATORIO: Reactivar procesamiento de formularios (punto 2) cuando todo lo demás funcione",
+    "status": "pending",
+    "priority": "medium",
+    "id": "2"
+  }
+]
