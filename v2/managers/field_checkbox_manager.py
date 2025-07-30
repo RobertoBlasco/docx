@@ -105,7 +105,17 @@ class FieldCheckboxManager(BaseManager):
                         # checked = estado actual del checkbox
                         checkbox_elem = sdt_pr.find('w14:checkbox', self.namespaces)
                         checked_elem = checkbox_elem.find('w14:checked', self.namespaces) if checkbox_elem is not None else None
-                        checkbox_obj.checked = 1 if (checked_elem is not None and checked_elem.get(qn('w:val')) == "1") else 0
+                        # Para Modern checkboxes, leer el namespace w14:val
+                        checkbox_obj.checked = 1 if (checked_elem is not None and checked_elem.get(qn('w14:val')) == "1") else 0
+                        
+                        # Leer los valores de estado del checkbox (checked/unchecked states)
+                        checked_state_elem = checkbox_elem.find('w14:checkedState', self.namespaces) if checkbox_elem is not None else None
+                        unchecked_state_elem = checkbox_elem.find('w14:uncheckedState', self.namespaces) if checkbox_elem is not None else None
+                        
+                        if checked_state_elem is not None:
+                            checkbox_obj.checked_state = checked_state_elem.get(qn('w14:val'))
+                        if unchecked_state_elem is not None:
+                            checkbox_obj.unchecked_state = unchecked_state_elem.get(qn('w14:val'))
                         
                         checkboxes_found.append(checkbox_obj)
         
@@ -190,12 +200,22 @@ class FieldCheckboxManager(BaseManager):
                                     checked_elem = checkbox_elem.find('w14:checked', self.namespaces)
                                     
                                     if checked_elem is not None:
-                                        checked_elem.set(qn('w:val'), new_val_str)
+                                        # Para Modern checkboxes usar namespace w14
+                                        checked_elem.set(qn('w14:val'), new_val_str)
                                     else:
                                         # Crear elemento checked si no existe
                                         checked_elem = OxmlElement('w14:checked')
-                                        checked_elem.set(qn('w:val'), new_val_str)
+                                        checked_elem.set(qn('w14:val'), new_val_str)
                                         checkbox_elem.append(checked_elem)
+                                    
+                                    # CRÍTICO: También actualizar el texto visual del checkbox
+                                    text_elem = sdt.find('.//w:t', self.namespaces)
+                                    if text_elem is not None:
+                                        # Para MS Gothic, usar los códigos específicos convertidos a hex
+                                        if value:
+                                            text_elem.text = chr(0xA34)  # 2612 en hex = checkbox marcado
+                                        else:
+                                            text_elem.text = chr(0xA32)  # 2610 en hex = checkbox desmarcado
                                     
                                     return True
             

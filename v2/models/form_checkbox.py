@@ -97,13 +97,25 @@ class FormCheckBoxModern(FormCheckBox) :
             })
 
             if checked_elem is not None:
-                # Modificar el valor existente
-                checked_elem.set(qn('w:val'), new_val_str)
+                # Modificar el valor existente - usar namespace w14
+                checked_elem.set(qn('w14:val'), new_val_str)
             else:
                 # Crear nuevo elemento w14:checked si no existe
                 checked_elem = OxmlElement('w14:checked')
-                checked_elem.set(qn('w:val'), new_val_str)
+                checked_elem.set(qn('w14:val'), new_val_str)
                 checkbox_elem.append(checked_elem)
+
+            # CRÍTICO: También actualizar el texto visual del checkbox
+            text_elem = self.xml_node.find('.//w:t', {
+                'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+            })
+            if text_elem is not None:
+                # Para MS Gothic, usar los códigos específicos como bytes
+                # 2612 (0xA34) = ☑, 2610 (0xA32) = ☐ en MS Gothic
+                if value:
+                    text_elem.text = chr(0xA34)  # Checkbox marcado en MS Gothic
+                else:
+                    text_elem.text = chr(0xA32)  # Checkbox desmarcado en MS Gothic
 
             # Actualizar el atributo interno
             self.checked = 1 if value else 0
