@@ -1,0 +1,55 @@
+<ineoDoc task="updateDocx">
+	<dataIn>FILE://./data/2_2.docx</dataIn>
+	<dataOut overwrite="true">FILE://2_salida.docx</dataOut>
+    <images>
+        <image id="1">FILE://./data/firma01.png</image>
+        <image id="2">FILE://./data/firma02.jpeg</image>
+		<image id="3">FILE://./data/firma03.jpeg</image>
+		<image id="4">FILE://./data/logo_ineosolutions.jpg</image>
+    </images>
+	<actions>
+		<action name="replaceTextWithImage" id="1">
+			<item searchText="##IMG01##">
+				<imgId>1</imgId>
+				<width>50</width>
+				<height>50</height>
+			</item>
+			<item searchText="##IMG02##"> 
+				<imgId>2</imgId>
+				<width>50</width>
+				<height>50</height>
+			</item>
+			<item searchText="##IMG03##">
+				<imgId>2</imgId>
+				<width>30</width>
+				<height>30</height>
+			</item>
+		</action>
+		<action name="replaceTextWithText" id="2">
+			<item searchText="nombrecontactoemplegal">Roberto Blasco</item>
+			<item searchText="nombrecontactoemp">Miguel Benjumea</item>
+		</action>
+		<action name="setBookmarkImage" id="3">
+			<bookmark name="img_logo">
+				<imgId>4</imgId>
+				<width>50</width>
+				<height>50</height>
+			</bookmark>
+		</action>
+        <action name="setFormCheckbox" id="4">
+			<form name="AT">1</form>
+			<form name="ST">1</form>
+			<form name="HI">1</form>
+			<form name="EP">1</form>
+			<form name="MT">1</form>
+			<form name="ColaboraEstrategico">1</form>
+			<form name="ColaboraNormal">1</form>
+			<form name="ColaboraImpuesto">1</form>
+			<form name="CdTprincipal">1</form>
+		</action>
+		<action name="setFormText" id="5">
+			<form tag="AT">Zaragoza</form>
+			<form tag="CdTprincipal">Hola Mundo</form>
+		</action>
+	</actions>
+</ineoDoc>

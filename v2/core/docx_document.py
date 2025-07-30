@@ -10,8 +10,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from docx import Document
 from managers.checkbox_manager import CheckboxManager
-from managers.text_manager import TextManager
-from managers.image_manager import ImageManager
+from managers.text_replacement_manager import TextReplacementManager
+from managers.text_to_image_manager import TextToImageManager
+from managers.text_field_manager import TextFieldManager
 
 
 class DocxDocument:
@@ -28,8 +29,9 @@ class DocxDocument:
             
             # Inicializar managers especializados
             self.checkbox_manager = CheckboxManager(self.docx)
-            self.text_manager = TextManager(self.docx)
-            self.image_manager = ImageManager(self.docx)
+            self.text_replacement_manager = TextReplacementManager(self.docx)
+            self.text_to_image_manager = TextToImageManager(self.docx)
+            self.text_field_manager = TextFieldManager(self.docx)
     
     # === MÉTODOS DE CHECKBOXES ===
     def get_checkboxes(self, includeBody=True, includeHeaders=True, includeFooters=True):
@@ -73,7 +75,7 @@ class DocxDocument:
         Returns:
             List[FormTextReplacement]: Lista de objetos con las ocurrencias encontradas
         """
-        return self.text_manager.get_text_occurrences(search_text, includeBody, includeHeaders, includeFooters)
+        return self.text_replacement_manager.get_text_occurrences(search_text, includeBody, includeHeaders, includeFooters)
     
     def replace_text_occurrence(self, replacement_obj):
         """
@@ -85,7 +87,7 @@ class DocxDocument:
         Returns:
             bool: True si se reemplazó correctamente, False si hubo error
         """
-        return self.text_manager.replace_text_occurrence(replacement_obj)
+        return self.text_replacement_manager.replace_text_occurrence(replacement_obj)
     
     # === MÉTODOS DE IMAGEN ===
     def get_text_for_image_replacement(self, search_text: str, includeBody=True, includeHeaders=True, includeFooters=True):
@@ -101,7 +103,7 @@ class DocxDocument:
         Returns:
             List[TextImageReplacement]: Lista de objetos con las ocurrencias encontradas
         """
-        return self.image_manager.get_text_for_image_replacement(search_text, includeBody, includeHeaders, includeFooters)
+        return self.text_to_image_manager.get_text_for_image_replacement(search_text, includeBody, includeHeaders, includeFooters)
     
     def replace_text_with_image(self, replacement_obj):
         """
@@ -113,7 +115,35 @@ class DocxDocument:
         Returns:
             bool: True si se reemplazó correctamente, False si hubo error
         """
-        return self.image_manager.replace_text_with_image(replacement_obj)
+        return self.text_to_image_manager.replace_text_with_image(replacement_obj)
+    
+    # === MÉTODOS DE CAMPOS DE TEXTO ===
+    def get_text_fields(self, includeBody=True, includeHeaders=True, includeFooters=True):
+        """
+        Encuentra todos los campos de texto (legacy y modern) en el documento
+        
+        Args:
+            includeBody: Buscar en el cuerpo del documento
+            includeHeaders: Buscar en headers
+            includeFooters: Buscar en footers
+        
+        Returns:
+            List[FormTextField]: Lista de objetos text field encontrados
+        """
+        return self.text_field_manager.get_text_fields(includeBody, includeHeaders, includeFooters)
+    
+    def set_text_field_value(self, text_field_obj, value: str):
+        """
+        Establece el valor de un campo de texto modificando directamente el XML del documento
+        
+        Args:
+            text_field_obj: Objeto FormTextFieldLegacy o FormTextFieldModern  
+            value: Nuevo valor para el campo de texto
+        
+        Returns:
+            bool: True si se modificó correctamente, False si hubo error
+        """
+        return self.text_field_manager.set_text_field_value(text_field_obj, value)
     
     # === MÉTODOS DEL DOCUMENTO ===
     def save_to_file(self, file_path):

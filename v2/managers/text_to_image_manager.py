@@ -9,7 +9,7 @@ from .base_manager import BaseManager
 from models import text_image_replacement as text_image_replacement
 
 
-class ImageManager(BaseManager):
+class TextToImageManager(BaseManager):
     def __init__(self, docx_document):
         super().__init__(docx_document)
     

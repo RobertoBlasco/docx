@@ -7,7 +7,7 @@ from .base_manager import BaseManager
 from models import text_replacement as text_replacement
 
 
-class TextManager(BaseManager):
+class TextReplacementManager(BaseManager):
     def __init__(self, docx_document):
         super().__init__(docx_document)
     
