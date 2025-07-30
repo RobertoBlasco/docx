@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <!-- Elemento raíz -->
+    <xs:element name="ineoDoc" type="IneoDocType"/>
+
+    <!-- Tipo principal del documento -->
+    <xs:complexType name="IneoDocType">
+        <xs:sequence>
+            <xs:element name="dataIn" type="xs:string"/>
+            <xs:element name="dataOut" type="DataOutType"/>
+            <xs:element name="images" type="ImagesType" minOccurs="0"/>
+            <xs:element name="actions" type="ActionsType"/>
+        </xs:sequence>
+        <xs:attribute name="task" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <!-- Tipo para dataOut -->
+    <xs:complexType name="DataOutType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="overwrite" type="xs:boolean" default="false"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Tipo para imágenes -->
+    <xs:complexType name="ImagesType">
+        <xs:sequence>
+            <xs:element name="image" type="ImageType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ImageType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="id" type="xs:string" use="required"/>
+                <xs:attribute name="md5" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Tipo para acciones -->
+    <xs:complexType name="ActionsType">
+        <xs:sequence>
+            <xs:element name="action" type="ActionType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ActionType">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="item" type="ItemType"/>
+            <xs:element name="bookmark" type="BookmarkImageType"/>
+            <xs:element name="form" type="FormType"/>
+        </xs:choice>
+        <xs:attribute name="name" type="ActionNameType" use="required"/>
+    </xs:complexType>
+
+    <!-- Tipos de acciones permitidas -->
+    <xs:simpleType name="ActionNameType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="replaceTextWithText"/>
+            <xs:enumeration value="replaceTextWithImage"/>
+            <xs:enumeration value="setFieldImage"/>
+            <xs:enumeration value="setFieldCheckbox"/>
+            <xs:enumeration value="setFieldText"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Tipos unificados más flexibles -->
+    <xs:complexType name="ItemType" mixed="true">
+        <xs:sequence minOccurs="0">
+            <xs:element name="imgId" type="xs:string" minOccurs="0"/>
+            <xs:element name="width" type="xs:positiveInteger" minOccurs="0"/>
+            <xs:element name="height" type="xs:positiveInteger" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="searchText" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="FormType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="name" type="xs:string" use="optional"/>
+                <xs:attribute name="tag" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="BookmarkImageType">
+        <xs:sequence>
+            <xs:element name="imgId" type="xs:string"/>
+            <xs:element name="width" type="xs:positiveInteger"/>
+            <xs:element name="height" type="xs:positiveInteger"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

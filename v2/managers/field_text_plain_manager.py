@@ -8,11 +8,11 @@ from .base_manager import BaseManager
 from models import form_text_field
 
 
-class TextFieldPlainManager(BaseManager):
+class FieldTextPlainManager(BaseManager):
     def __init__(self, docx_document):
         super().__init__(docx_document)
     
-    def get_fields(self, includeBody=True, includeHeaders=True, includeFooters=True):
+    def get_fields_text(self, includeBody=True, includeHeaders=True, includeFooters=True):
         """
         Encuentra todos los campos de texto Plain (w:text) en el documento
         
@@ -88,7 +88,7 @@ class TextFieldPlainManager(BaseManager):
         
         return text_fields_found
     
-    def set_field_value(self, text_field_obj, value: str):
+    def set_field_text_value(self, text_field_obj, value: str):
         """
         Establece el valor de un campo de texto plain
         

@@ -173,7 +173,7 @@ Los campos modernos utilizan la estructura `w:sdt` (Structured Document Tag) int
 
 ## Funcionalidades del Manager
 
-### `get_text_fields(includeBody=True, includeHeaders=True, includeFooters=True)`
+### `get_fields_text(includeBody=True, includeHeaders=True, includeFooters=True)`
 
 Busca y retorna todos los campos de texto en el documento.
 
@@ -188,7 +188,7 @@ Busca y retorna todos los campos de texto en el documento.
 Modifica el valor de un campo de texto específico.
 
 **Parámetros**:
-- `text_field_obj`: Objeto FormTextField obtenido de `get_text_fields()`
+- `text_field_obj`: Objeto FormTextField obtenido de `get_fields_text()`
 - `value`: Nuevo valor de texto a asignar
 
 **Retorna**: `bool` - True si la modificación fue exitosa
@@ -272,7 +272,7 @@ for sdt in sdts:
 
 ### Procesamiento
 1. El sistema busca campos con `tag="first_name"`, `tag="apellido_usuario"`, etc.
-2. Asigna los valores especificados usando `set_text_field_value()`
+2. Asigna los valores especificados usando `set_field_text_value()`
 3. Los campos se actualizan en el documento Word
 
 ---

@@ -11,7 +11,7 @@ class DocxDocument :
         if bytes is not None :
             self.docx = Document(io.BytesIO(bytes))
 
-    def get_checkboxes(self, includeBody=True, includeHeaders=True, includeFooters=True):
+    def get_fields_checkbox(self, includeBody=True, includeHeaders=True, includeFooters=True):
         checkboxes_found = []
 
         # Namespaces
@@ -116,7 +116,7 @@ class DocxDocument :
 
         return checkboxes_found
 
-    def set_checkbox_value(self, checkbox_obj, value: bool):
+    def set_field_checkbox_value(self, checkbox_obj, value: bool):
         """
         Activa o desactiva un checkbox modificando directamente el XML del documento
         

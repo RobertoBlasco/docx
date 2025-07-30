@@ -56,12 +56,12 @@ with open("documento.docx", "rb") as f:
     doc = docx_document.DocxDocument(f.read())
 
 # Obtener checkboxes
-checkboxes = doc.get_checkboxes()
+checkboxes = doc.get_fields_checkbox()
 
 # Modificar checkbox
 for cb in checkboxes:
     if cb.name == "mi_checkbox":
-        doc.set_checkbox_value(cb, True)
+        doc.set_field_checkbox_value(cb, True)
 
 # Guardar
 doc.save_to_file("resultado.docx")

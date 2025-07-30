@@ -106,7 +106,7 @@ for action in xml_data.actions:
         document_modified = True
     elif (action.name == xml_actions.ACCIONES.ActionSetBookmarkFormCheckbox):
         checkbox_value = True if value == "1" else False
-        success = checkbox_action.set_checkbox_value(bookmark, checkbox_value)
+        success = checkbox_action.set_field_checkbox_value(bookmark, checkbox_value)
         if success:
             document_modified = True
 ```
@@ -155,7 +155,7 @@ action = ActionSetFormCheckbox(document_path)
 action.load_document()
 
 # Set single checkbox
-action.set_checkbox_value('checkbox_name', True)
+action.set_field_checkbox_value('checkbox_name', True)
 
 # Set multiple checkboxes
 action.set_multiple_checkboxes({

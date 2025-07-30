@@ -61,7 +61,7 @@ class FormCheckBoxLegacy (FormCheckBox) :
 class FormCheckBoxModern(FormCheckBox) :
 
     def __init__(self) :
-        super.__init__()
+        super().__init__()
         self.checked = 0
         self.alias = None
         self.tag = None

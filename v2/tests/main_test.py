@@ -23,8 +23,8 @@ def main() :
     # docx = docx_document.DocxDocument(file_bytes)
     # checkboxes = docx.get_checkboxes()    
     # for checkbox in checkboxes :
-    #     if checkbox.name == "AT" :
-    #         success = docx.set_checkbox_value(checkbox, True)
+    #     if checkbox.name == "AT" :set_checkbox_value
+    #         success = docx.(checkbox, True)
     #         if success :
     #             print ("Fichero modificado")
     #             docx.save_to_file("borrar.docx")

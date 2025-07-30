@@ -9,10 +9,10 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from docx import Document
-from managers.checkbox_manager import CheckboxManager
+from managers.field_checkbox_manager import FieldCheckboxManager
 from managers.text_replacement_manager import TextReplacementManager
 from managers.text_to_image_manager import TextToImageManager
-from managers.text_field_manager import TextFieldManager
+from managers.field_text_manager import FieldTextManager
 
 
 class DocxDocument:
@@ -28,13 +28,13 @@ class DocxDocument:
             self.docx = Document(io.BytesIO(bytes))
             
             # Inicializar managers especializados
-            self.checkbox_manager = CheckboxManager(self.docx)
             self.text_replacement_manager = TextReplacementManager(self.docx)
             self.text_to_image_manager = TextToImageManager(self.docx)
-            self.text_field_manager = TextFieldManager(self.docx)
+            self.field_checkbox_manager = FieldCheckboxManager(self.docx)
+            self.field_text_manager = FieldTextManager(self.docx)
     
     # === MÉTODOS DE CHECKBOXES ===
-    def get_checkboxes(self, includeBody=True, includeHeaders=True, includeFooters=True):
+    def get_fields_checkbox(self, includeBody=True, includeHeaders=True, includeFooters=True):
         """
         Encuentra todos los checkboxes (legacy y modern) en el documento
         
@@ -46,9 +46,9 @@ class DocxDocument:
         Returns:
             List[FormCheckBox]: Lista de objetos checkbox encontrados
         """
-        return self.checkbox_manager.get_checkboxes(includeBody, includeHeaders, includeFooters)
+        return self.field_checkbox_manager.get_fields_checkbox(includeBody, includeHeaders, includeFooters)
     
-    def set_checkbox_value(self, checkbox_obj, value: bool):
+    def set_field_checkbox_value(self, checkbox_obj, value: bool):
         """
         Activa o desactiva un checkbox modificando directamente el XML del documento
         
@@ -59,7 +59,7 @@ class DocxDocument:
         Returns:
             bool: True si se modificó correctamente, False si hubo error
         """
-        return self.checkbox_manager.set_checkbox_value(checkbox_obj, value)
+        return self.field_checkbox_manager.set_field_checkbox_value(checkbox_obj, value)
     
     # === MÉTODOS DE TEXTO ===
     def get_text_occurrences(self, search_text: str, includeBody=True, includeHeaders=True, includeFooters=True):
@@ -118,7 +118,7 @@ class DocxDocument:
         return self.text_to_image_manager.replace_text_with_image(replacement_obj)
     
     # === MÉTODOS DE CAMPOS DE TEXTO ===
-    def get_text_fields(self, includeBody=True, includeHeaders=True, includeFooters=True):
+    def get_fields_text(self, includeBody=True, includeHeaders=True, includeFooters=True):
         """
         Encuentra todos los campos de texto (legacy y modern) en el documento
         
@@ -130,9 +130,9 @@ class DocxDocument:
         Returns:
             List[FormTextField]: Lista de objetos text field encontrados
         """
-        return self.text_field_manager.get_text_fields(includeBody, includeHeaders, includeFooters)
+        return self.field_text_manager.get_fields_text(includeBody, includeHeaders, includeFooters)
     
-    def set_text_field_value(self, text_field_obj, value: str):
+    def set_field_text_value(self, text_field_obj, value: str):
         """
         Establece el valor de un campo de texto modificando directamente el XML del documento
         
@@ -143,7 +143,7 @@ class DocxDocument:
         Returns:
             bool: True si se modificó correctamente, False si hubo error
         """
-        return self.text_field_manager.set_text_field_value(text_field_obj, value)
+        return self.field_text_manager.set_field_text_value(text_field_obj, value)
     
     # === MÉTODOS DEL DOCUMENTO ===
     def save_to_file(self, file_path):
@@ -167,3 +167,4 @@ class DocxDocument:
             return doc_stream.read()
         else:
             raise ValueError("Documento no inicializado")
+    

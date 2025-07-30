@@ -4,23 +4,23 @@ Orquesta managers especializados para cada tipo de campo
 """
 
 from .base_manager import BaseManager
-from .text_field_legacy_manager import TextFieldLegacyManager
-from .text_field_plain_manager import TextFieldPlainManager
-from .text_field_free_manager import TextFieldFreeManager  
-from .text_field_rich_manager import TextFieldRichManager
+from .field_text_legacy_manager import FieldTextLegacyManager
+from .field_text_plain_manager import FieldTextPlainManager
+from .field_text_free_manager import FieldTextFreeManager  
+from .field_text_rich_manager import FieldTextRichManager
 
 
-class TextFieldManager(BaseManager):
+class FieldTextManager(BaseManager):
     def __init__(self, docx_document):
         super().__init__(docx_document)
         
         # Inicializar managers especializados
-        self.legacy_manager = TextFieldLegacyManager(docx_document)
-        self.plain_manager = TextFieldPlainManager(docx_document)
-        self.free_manager = TextFieldFreeManager(docx_document)
-        self.rich_manager = TextFieldRichManager(docx_document)
+        self.legacy_manager = FieldTextLegacyManager(docx_document)
+        self.plain_manager = FieldTextPlainManager(docx_document)
+        self.free_manager = FieldTextFreeManager(docx_document)
+        self.rich_manager = FieldTextRichManager(docx_document)
     
-    def get_text_fields(self, includeBody=True, includeHeaders=True, includeFooters=True):
+    def get_fields_text(self, includeBody=True, includeHeaders=True, includeFooters=True):
         """
         Encuentra todos los campos de texto (todos los tipos) en el documento
         
@@ -35,14 +35,14 @@ class TextFieldManager(BaseManager):
         all_text_fields = []
         
         # Recopilar campos de todos los managers especializados
-        all_text_fields.extend(self.legacy_manager.get_fields(includeBody, includeHeaders, includeFooters))
-        all_text_fields.extend(self.plain_manager.get_fields(includeBody, includeHeaders, includeFooters))
-        all_text_fields.extend(self.free_manager.get_fields(includeBody, includeHeaders, includeFooters))
-        all_text_fields.extend(self.rich_manager.get_fields(includeBody, includeHeaders, includeFooters))
+        all_text_fields.extend(self.legacy_manager.get_fields_text(includeBody, includeHeaders, includeFooters))
+        all_text_fields.extend(self.plain_manager.get_fields_text(includeBody, includeHeaders, includeFooters))
+        all_text_fields.extend(self.free_manager.get_fields_text(includeBody, includeHeaders, includeFooters))
+        all_text_fields.extend(self.rich_manager.get_fields_text(includeBody, includeHeaders, includeFooters))
         
         return all_text_fields
     
-    def set_text_field_value(self, text_field_obj, value: str):
+    def set_field_text_value(self, text_field_obj, value: str):
         """
         Establece el valor de un campo de texto delegando al manager especializado apropiado
         
@@ -57,7 +57,7 @@ class TextFieldManager(BaseManager):
             # Determinar el tipo de campo y delegar al manager apropiado
             if hasattr(text_field_obj, 'name'):
                 # Es un campo Legacy
-                return self.legacy_manager.set_field_value(text_field_obj, value)
+                return self.legacy_manager.set_field_text_value(text_field_obj, value)
             else:
                 # Es un campo Modern - necesitamos determinar el subtipo
                 # Analizamos el xpath para determinar el tipo
@@ -65,36 +65,36 @@ class TextFieldManager(BaseManager):
                 
                 if 'w:text]' in xpath:
                     # Campo Plain (con restricción w:text)
-                    return self.plain_manager.set_field_value(text_field_obj, value)
+                    return self.plain_manager.set_field_text_value(text_field_obj, value)
                 elif 'w:richText]' in xpath:
                     # Campo Rich (con capacidades de formato)
-                    return self.rich_manager.set_field_value(text_field_obj, value)
+                    return self.rich_manager.set_field_text_value(text_field_obj, value)
                 else:
                     # Campo Free (sin restricciones)
-                    return self.free_manager.set_field_value(text_field_obj, value)
+                    return self.free_manager.set_field_text_value(text_field_obj, value)
             
         except Exception as e:
             print(f"Error al modificar text field en documento: {e}")
             return False
     
     # Métodos de acceso directo a managers especializados (opcional)
-    def get_legacy_fields(self, includeBody=True, includeHeaders=True, includeFooters=True):
+    def get_legacy_fields_text(self, includeBody=True, includeHeaders=True, includeFooters=True):
         """Obtiene solo campos Legacy"""
-        return self.legacy_manager.get_fields(includeBody, includeHeaders, includeFooters)
+        return self.legacy_manager.get_fields_text(includeBody, includeHeaders, includeFooters)
     
-    def get_plain_fields(self, includeBody=True, includeHeaders=True, includeFooters=True):
+    def get_plain_fields_text(self, includeBody=True, includeHeaders=True, includeFooters=True):
         """Obtiene solo campos Plain (w:text)"""
-        return self.plain_manager.get_fields(includeBody, includeHeaders, includeFooters)
+        return self.plain_manager.get_fields_text(includeBody, includeHeaders, includeFooters)
     
-    def get_free_fields(self, includeBody=True, includeHeaders=True, includeFooters=True):
+    def get_free_fields_text(self, includeBody=True, includeHeaders=True, includeFooters=True):
         """Obtiene solo campos Free (contenido libre)"""
-        return self.free_manager.get_fields(includeBody, includeHeaders, includeFooters)
+        return self.free_manager.get_fields_text(includeBody, includeHeaders, includeFooters)
     
-    def get_rich_fields(self, includeBody=True, includeHeaders=True, includeFooters=True):
+    def get_rich_fields_text(self, includeBody=True, includeHeaders=True, includeFooters=True):
         """Obtiene solo campos Rich (w:richText)"""
-        return self.rich_manager.get_fields(includeBody, includeHeaders, includeFooters)
+        return self.rich_manager.get_fields_text(includeBody, includeHeaders, includeFooters)
     
-    def get_fields_by_type(self):
+    def get_fields_text_by_type(self):
         """
         Obtiene campos organizados por tipo
         
@@ -108,14 +108,14 @@ class TextFieldManager(BaseManager):
             'rich': self.get_rich_fields()
         }
     
-    def get_field_statistics(self):
+    def get_field_text_statistics(self):
         """
         Obtiene estadísticas de campos por tipo
         
         Returns:
             dict: Diccionario con conteos por tipo
         """
-        fields_by_type = self.get_fields_by_type()
+        fields_by_type = self.get_fields_text_by_type()
         
         return {
             'legacy_count': len(fields_by_type['legacy']),

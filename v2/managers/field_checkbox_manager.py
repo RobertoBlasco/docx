@@ -8,11 +8,11 @@ from .base_manager import BaseManager
 from models import form_checkbox as form_checkbox
 
 
-class CheckboxManager(BaseManager):
+class FieldCheckboxManager(BaseManager):
     def __init__(self, docx_document):
         super().__init__(docx_document)
     
-    def get_checkboxes(self, includeBody=True, includeHeaders=True, includeFooters=True):
+    def get_fields_checkbox(self, includeBody=True, includeHeaders=True, includeFooters=True):
         """
         Encuentra todos los checkboxes (legacy y modern) en el documento
         
@@ -111,7 +111,7 @@ class CheckboxManager(BaseManager):
         
         return checkboxes_found
     
-    def set_checkbox_value(self, checkbox_obj, value: bool):
+    def set_field_checkbox_value(self, checkbox_obj, value: bool):
         """
         Activa o desactiva un checkbox modificando directamente el XML del documento
         

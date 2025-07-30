@@ -33,7 +33,7 @@ def main():
         docx_doc = DocxDocument(doc_bytes)
         
         # Obtener todos los campos de texto usando el manager
-        text_fields = docx_doc.get_text_fields()
+        text_fields = docx_doc.get_fields_text()
         
         print(f"\n📝 Campos de texto encontrados: {len(text_fields)}")
         print("=" * 50)
