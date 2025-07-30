@@ -15,8 +15,7 @@ from models.executable_actions import (
     TextReplacementAction, 
     TextToImageAction, 
     FieldCheckboxAction, 
-    FieldTextAction,
-    FieldImageAction
+    FieldTextAction
 )
 from core.docx_document import DocxDocument
 
@@ -108,13 +107,6 @@ class UpdateDocx:
                     text_fields=action_data.items
                 )
             
-            elif action_data.name == 'setFieldImage':
-                executable_action = FieldImageAction(
-                    action_id=action_data.id,
-                    manager=None,  # Manager se implementará en el futuro
-                    image_fields=action_data.items,
-                    images_dict=self.images_dict
-                )
             
             if executable_action:
                 self.actions.append(executable_action)

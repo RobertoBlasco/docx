@@ -211,11 +211,11 @@ class FieldCheckboxManager(BaseManager):
                                     # CRÍTICO: También actualizar el texto visual del checkbox
                                     text_elem = sdt.find('.//w:t', self.namespaces)
                                     if text_elem is not None:
-                                        # Para MS Gothic, usar los códigos específicos convertidos a hex
+                                        # Usar códigos de caracteres Unicode estándar para checkboxes
                                         if value:
-                                            text_elem.text = chr(0xA34)  # 2612 en hex = checkbox marcado
+                                            text_elem.text = chr(0x2612)  # ☒ BALLOT BOX WITH X
                                         else:
-                                            text_elem.text = chr(0xA32)  # 2610 en hex = checkbox desmarcado
+                                            text_elem.text = chr(0x2610)  # ☐ BALLOT BOX
                                     
                                     return True
             

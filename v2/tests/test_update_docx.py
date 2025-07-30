@@ -13,7 +13,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("/home/rj/Documentos/ineoDocx.log", mode='w'),
+        logging.FileHandler("D:/dev/ineodocx/ejemplos/ineoDocx.log", mode='w'),
         logging.StreamHandler()  # Para mostrar en consola
     ]
 )

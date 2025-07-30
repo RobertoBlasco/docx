@@ -1,11 +1,11 @@
 <ineoDoc task="updateDocx">
-	<dataIn>/home/rj/Documentos/prueba.docx</dataIn>
-	<dataOut overwrite="true">/home/rj/Documentos/prueba_salida.docx</dataOut>
+	<dataIn>D:/dev/ineodocx/ejemplos/prueba.docx</dataIn>
+	<dataOut overwrite="true">D:/dev/ineodocx/ejemplos/prueba_salida.docx</dataOut>
     <images>
-        <image id="1">/home/rj/Documentos/data/firma01.png</image>
-        <image id="2">/home/rj/Documentos/data/firma02.jpeg</image>
-		<image id="3">/home/rj/Documentos/data/firma03.jpeg</image>
-		<image id="4">/home/rj/Documentos/data/logo_ineosolutions.jpg</image>
+        <image id="1">D:/dev/ineodocx/ejemplos/firma01.png</image>
+        <image id="2">D:/dev/ineodocx/ejemplos/firma02.jpeg</image>
+		<image id="3">D:/dev/ineodocx/ejemplos/firma03.jpeg</image>
+		<image id="4">D:/dev/ineodocx/ejemplos/logo_ineosolutions.jpg</image>
     </images>
 	<actions>
 		<action name="replaceTextWithImage">

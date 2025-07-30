@@ -177,24 +177,5 @@ class FieldTextAction(ExecutableAction):
         return f"TextField: {len(self.text_fields)} campos de texto"
 
 
-class FieldImageAction(ExecutableAction):
-    """Acción para establecer imágenes en campos de imagen"""
-    
-    def __init__(self, action_id: str, manager, image_fields: List, images_dict: dict):
-        super().__init__(action_id)
-        self.manager = manager
-        self.image_fields = image_fields  # Lista de FieldImage
-        self.images_dict = images_dict    # Diccionario {id: ruta_imagen}
-    
-    def execute(self, docx_document) -> bool:
-        """Ejecuta todos los cambios de campos de imagen"""
-        print(f"⚠️  FieldImageAction no implementada aún - se implementará en el futuro")
-        print(f"📝 Campos de imagen configurados: {len(self.image_fields)}")
-        for field in self.image_fields:
-            print(f"   - Campo '{field.tag}' → IMG:{field.img_id} ({field.width}x{field.height})")
-        return False  # No implementado aún
-    
-    def get_description(self) -> str:
-        return f"FieldImage: {len(self.image_fields)} campos de imagen"
 
 

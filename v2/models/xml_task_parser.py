@@ -47,12 +47,6 @@ class FieldText:
     value: str
 
 
-@dataclass
-class FieldImage:
-    tag: str
-    img_id: str
-    width: int
-    height: int
 
 
 @dataclass
@@ -63,8 +57,7 @@ class Action:
         TextReplacementItem, 
         ImageReplacementItem, 
         FieldCheckbox, 
-        FieldText,
-        FieldImage
+        FieldText
     ]]
 
 
@@ -291,18 +284,6 @@ class XmlTaskParser:
                     value=form.get('$', '')         # Contenido con $
                 ))
         
-        elif action_name == 'setFieldImage':
-            form_list = action_dict.get('form', [])
-            if not isinstance(form_list, list):
-                form_list = [form_list]
-            
-            for form in form_list:
-                items.append(FieldImage(
-                    tag=form.get('@tag', ''),                    # Atributo con @
-                    img_id=form.get('imgId', ''),                # Elemento normal
-                    width=int(form.get('width', 0)),             # Elemento normal
-                    height=int(form.get('height', 0))            # Elemento normal
-                ))
         
         return Action(name=action_name, id=action_id, items=items) if items else None
     
