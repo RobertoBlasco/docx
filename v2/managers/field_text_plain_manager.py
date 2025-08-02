@@ -5,7 +5,7 @@ Manager especializado para campos de texto Plain (w:sdt/w:text)
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 from .base_manager import BaseManager
-from models import form_text_field
+from models import field_text_model as form_text_field
 
 
 class FieldTextPlainManager(BaseManager):

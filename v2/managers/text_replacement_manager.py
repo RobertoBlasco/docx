@@ -4,7 +4,7 @@ Manager para gestionar reemplazo de texto en documentos Word
 
 from docx.oxml.ns import qn
 from .base_manager import BaseManager
-from models import text_replacement as text_replacement
+from models import text_replacement_model as text_replacement
 
 
 class TextReplacementManager(BaseManager):

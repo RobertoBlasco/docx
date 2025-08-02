@@ -1,11 +1,11 @@
 <ineoDoc task="updateDocx">
-	<dataIn>D:/dev/ineodocx/ejemplos/prueba.docx</dataIn>
-	<dataOut overwrite="true">D:/dev/ineodocx/ejemplos/prueba_salida.docx</dataOut>
+	<dataIn>FILE://D:/dev/ineodocx/ejemplos/prueba.docx</dataIn>
+	<dataOut overwrite="true" outType="file">FILE://D:/dev/ineodocx/ejemplos/prueba_salida.docx</dataOut>
     <images>
-        <image id="1">D:/dev/ineodocx/ejemplos/firma01.png</image>
-        <image id="2">D:/dev/ineodocx/ejemplos/firma02.jpeg</image>
-		<image id="3">D:/dev/ineodocx/ejemplos/firma03.jpeg</image>
-		<image id="4">D:/dev/ineodocx/ejemplos/logo_ineosolutions.jpg</image>
+        <image id="1">FILE://D:/dev/ineodocx/ejemplos/firma01.png</image>
+        <image id="2">FILE://D:/dev/ineodocx/ejemplos/firma02.jpeg</image>
+		<image id="3">FILE://D:/dev/ineodocx/ejemplos/firma03.jpeg</image>
+		<image id="4">FILE://D:/dev/ineodocx/ejemplos/logo_ineosolutions.jpg</image>
     </images>
 	<actions>
 		<action name="replaceTextWithImage">
@@ -37,5 +37,17 @@
 			<form tag="first_name">Roberto</form>
 			<form tag="last_name">Blasco</form>
 		</action>
+		<!-- <action name="setFieldImage">
+			<form tag="main_logo">
+				<imgId>4</imgId>
+				<width>75</width>
+				<height>75</height>
+			</form>
+			<form tag="logo_empresa">
+				<imgId>4</imgId>
+				<width>50</width>
+				<height>50</height>
+			</form>
+		</action> -->
 	</actions>
 </ineoDoc>

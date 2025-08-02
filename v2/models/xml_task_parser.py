@@ -14,6 +14,7 @@ logger = logging.getLogger("IneoDocx")
 class DataOut:
     path: str
     overwrite: bool = False
+    out_type: str = "file"  # "file" o "base64" (case-insensitive)
 
 
 @dataclass 
@@ -47,6 +48,14 @@ class FieldText:
     value: str
 
 
+@dataclass
+class FieldImage:
+    tag: str
+    img_id: str
+    width: int
+    height: int
+
+
 
 
 @dataclass
@@ -57,7 +66,8 @@ class Action:
         TextReplacementItem, 
         ImageReplacementItem, 
         FieldCheckbox, 
-        FieldText
+        FieldText,
+        FieldImage
     ]]
 
 
@@ -177,7 +187,8 @@ class XmlTaskParser:
         else:
             data_out = DataOut(
                 path=data_out_dict.get('$', ''),  # xmlschema usa '$' para contenido
-                overwrite=data_out_dict.get('@overwrite', False)  # xmlschema usa '@' para atributos
+                overwrite=data_out_dict.get('@overwrite', False),  # xmlschema usa '@' para atributos
+                out_type=data_out_dict.get('@outType', 'file').lower()  # Nuevo atributo obligatorio, normalizado a lowercase
             )
         
         # Images
@@ -282,6 +293,19 @@ class XmlTaskParser:
                 items.append(FieldText(
                     tag=form.get('@tag', ''),       # Atributo con @
                     value=form.get('$', '')         # Contenido con $
+                ))
+        
+        elif action_name == 'setFieldImage':
+            form_list = action_dict.get('form', [])
+            if not isinstance(form_list, list):
+                form_list = [form_list]
+            
+            for form in form_list:
+                items.append(FieldImage(
+                    tag=form.get('@tag', ''),                    # Atributo con @
+                    img_id=form.get('imgId', ''),                # Elemento normal
+                    width=int(form.get('width', 0)),             # Elemento normal
+                    height=int(form.get('height', 0))            # Elemento normal
                 ))
         
         

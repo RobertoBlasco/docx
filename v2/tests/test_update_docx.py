@@ -13,8 +13,8 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("D:/dev/ineodocx/ejemplos/ineoDocx.log", mode='w'),
-        logging.StreamHandler()  # Para mostrar en consola
+        logging.FileHandler("D:/dev/ineodocx/ejemplos/ineoDocx.log", mode='w')
+        # StreamHandler removido - solo archivo de log
     ]
 )
 logger = logging.getLogger("IneoDocx")
@@ -91,34 +91,13 @@ def update_task_xml(updater):
     logger.info("Iniciando ejecución de acciones en documento...")
     
     try:
-        results = updater.process_document()
+        xml_response = updater.process_document()
         
-        # Mostrar resultados detallados
-        logger.info("Resultados de ejecución:")
-        
-        for detail in results.get('details', []):
-            status = "OK" if detail['success'] else "ERROR"
-            logger.info(f"{status} {detail['action']}")
-            if 'error' in detail:
-                logger.error(f"     Error: {detail['error']}")
-        
-        # Resumen final
-        
-        logger.info("Resumen final:")
-        logger.info(f"Total acciones: {results['total_actions']}")  
-        logger.info(f"Exitosas: {results['successful_actions']}")
-        logger.info(f"Fallidas: {results['failed_actions']}")
-        
-        if results.get('document_saved', False):
-            logger.info("Procesamiento completado exitosamente")
-            logger.info(f"Documento guardado en: {updater.task_data.data_out.path}")
-        else:
-            logger.error("Procesamiento fallido")
-            if 'error' in results:
-                logger.error(f"Error principal: {results['error']}")
+        # Solo mostrar la respuesta XML sin información adicional
+        print(xml_response)
                 
     except Exception as e:
-        logger.error(f"Error ejecutando acciones: {e}")
+        print(f"Error ejecutando acciones: {e}")
         import traceback
         traceback.print_exc()
 

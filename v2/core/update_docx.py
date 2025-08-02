@@ -7,6 +7,7 @@ import sys
 import logging
 
 logger = logging.getLogger("IneoDocx")
+from utils.memory_log_handler import MemoryLogHandler, XmlResponseBuilder
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -15,9 +16,11 @@ from models.executable_actions import (
     TextReplacementAction, 
     TextToImageAction, 
     FieldCheckboxAction, 
-    FieldTextAction
+    FieldTextAction,
+    FieldImageAction
 )
 from core.docx_document import DocxDocument
+from utils.content_loader import load_content
 
 class UpdateDocx:
     """
@@ -36,11 +39,19 @@ class UpdateDocx:
         self.actions = []
         self.images_dict = {}
         
+        # Memory log handler para capturar logs
+        self.memory_log_handler = MemoryLogHandler()
+        self.xml_response_builder = XmlResponseBuilder()
+        
+        # Añadir handler al logger
+        logger.addHandler(self.memory_log_handler)
+        
         # Managers (se inicializarán cuando se cargue el documento)
         self.text_replacement_manager = None
         self.text_to_image_manager = None
         self.field_checkbox_manager = None
         self.field_text_manager = None
+        self.field_image_manager = None
         
         # Cargar y parsear XML
         self._load_xml_configuration()
@@ -70,6 +81,7 @@ class UpdateDocx:
         self.text_to_image_manager = docx_document.text_to_image_manager
         self.field_checkbox_manager = docx_document.field_checkbox_manager
         self.field_text_manager = docx_document.field_text_manager
+        self.field_image_manager = docx_document.field_image_manager
     
     def _create_executable_actions(self):
         """Convierte las acciones del XML en acciones ejecutables"""
@@ -107,6 +119,14 @@ class UpdateDocx:
                     text_fields=action_data.items
                 )
             
+            elif action_data.name == 'setFieldImage':
+                executable_action = FieldImageAction(
+                    action_id=action_data.id,
+                    manager=self.field_image_manager,
+                    image_fields=action_data.items,
+                    images_dict=self.images_dict
+                )
+            
             
             if executable_action:
                 self.actions.append(executable_action)
@@ -122,15 +142,8 @@ class UpdateDocx:
             DocxDocument: Documento cargado y listo para procesar
         """
         try:
-            # Procesar ruta del documento
-            doc_path = self.task_data.data_in.replace('FILE://', '')
-            
-            if not os.path.exists(doc_path):
-                raise FileNotFoundError(f"Documento no encontrado: {doc_path}")
-            
-            # Cargar documento
-            with open(doc_path, 'rb') as file:
-                doc_bytes = file.read()
+            # Cargar documento usando content_loader
+            doc_bytes = load_content(self.task_data.data_in)
             
             docx_document = DocxDocument(doc_bytes)
             
@@ -196,28 +209,84 @@ class UpdateDocx:
         
         return results
     
-    def save_document(self, docx_document: DocxDocument):
+    def save_document(self, docx_document: DocxDocument) -> dict:
         """
-        Guarda el documento procesado
+        Guarda el documento procesado según el tipo de salida configurado
         
         Args:
             docx_document: Documento a guardar
+            
+        Returns:
+            dict: Información sobre el guardado (ruta, base64, etc.)
         """
         try:
-            output_path = self.task_data.data_out.path.replace('FILE://', '')
-            docx_document.save_to_file(output_path)
-            logger.info(f"Documento guardado en: {output_path}")
+            out_type = self.task_data.data_out.out_type.lower()
+            
+            if out_type == "file":
+                # Guardar como archivo
+                output_path = self.task_data.data_out.path.replace('FILE://', '')
+                docx_document.save_to_file(output_path)
+                logger.info(f"Documento guardado en archivo: {output_path}")
+                return {
+                    'type': 'file',
+                    'path': output_path,
+                    'success': True
+                }
+                
+            elif out_type == "base64":
+                # Devolver como Base64
+                import base64
+                doc_bytes = docx_document.get_bytes()
+                base64_content = base64.b64encode(doc_bytes).decode('utf-8')
+                logger.info(f"Documento convertido a Base64 ({len(base64_content)} caracteres)")
+                return {
+                    'type': 'base64',
+                    'content': base64_content,
+                    'size_bytes': len(doc_bytes),
+                    'size_base64': len(base64_content),
+                    'success': True
+                }
+            
+            else:
+                raise ValueError(f"Tipo de salida no soportado: {out_type}")
             
         except Exception as e:
             raise Exception(f"Error guardando documento: {e}")
     
-    def process_document(self) -> dict:
+    def generate_xml_response(self, execution_results: dict, save_result: dict) -> str:
+        """
+        Genera respuesta XML completa con logs
+        
+        Args:
+            execution_results: Resultados de ejecución de acciones
+            save_result: Resultado del guardado
+            
+        Returns:
+            str: XML response formateado
+        """
+        # Obtener logs capturados
+        captured_logs = self.memory_log_handler.get_logs()
+        
+        # Generar XML
+        xml_response = self.xml_response_builder.build_response(
+            task_name=self.task_data.task,
+            execution_results=execution_results,
+            save_result=save_result,
+            logs=captured_logs
+        )
+        
+        return xml_response
+    
+    def process_document(self) -> str:
         """
         Proceso completo: cargar documento, ejecutar acciones y guardar
         
         Returns:
-            dict: Resumen completo del procesamiento
+            str: Respuesta XML completa del procesamiento
         """
+        import time
+        start_time = time.time()
+        
         try:
             # Cargar documento
             docx_document = self.load_document()
@@ -226,26 +295,51 @@ class UpdateDocx:
             results = self.execute_all_actions(docx_document)
             
             # Guardar documento
-            self.save_document(docx_document)
+            save_result = self.save_document(docx_document)
+            
+            # Calcular tiempo total de ejecución
+            end_time = time.time()
+            execution_time_ms = int((end_time - start_time) * 1000)
             
             # Resumen final
             logger.info("Resumen final:")
             logger.info(f"Total acciones: {results['total_actions']}")
             logger.info(f"Acciones exitosas: {results['successful_actions']}")  
             logger.info(f"Acciones fallidas: {results['failed_actions']}")
-            logger.info(f"Documento guardado: {self.task_data.data_out.path}")
-            results['document_saved'] = True
-            return results
+            logger.info(f"Tiempo de ejecución: {execution_time_ms}ms")
+            
+            if save_result['type'] == 'file':
+                logger.info(f"Documento guardado en: {save_result['path']}")
+            else:
+                logger.info(f"Documento como Base64: {save_result['size_base64']} caracteres")
+            
+            # Añadir tiempo de ejecución a resultados
+            results['execution_time_ms'] = execution_time_ms
+            
+            # Generar respuesta XML siempre (independiente del outType)
+            xml_response = self.generate_xml_response(results, save_result)
+            return xml_response
             
         except Exception as e:
+            # Calcular tiempo incluso en error
+            end_time = time.time()
+            execution_time_ms = int((end_time - start_time) * 1000)
+            
             logger.error(f"Error en proceso: {e}")
-            return {
+            
+            error_results = {
                 'total_actions': len(self.actions) if self.actions else 0,
                 'successful_actions': 0,
                 'failed_actions': 0,
                 'document_saved': False,
-                'error': str(e)
+                'error': str(e),
+                'execution_time_ms': execution_time_ms
             }
+            
+            # Generar XML de error
+            error_save_result = {'type': 'error', 'success': False, 'error': str(e)}
+            xml_response = self.generate_xml_response(error_results, error_save_result)
+            return xml_response
     
     def get_action_summary(self) -> dict:
         """

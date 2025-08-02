@@ -13,6 +13,7 @@ from managers.field_checkbox_manager import FieldCheckboxManager
 from managers.text_replacement_manager import TextReplacementManager
 from managers.text_to_image_manager import TextToImageManager
 from managers.field_text_manager import FieldTextManager
+from managers.field_image_manager import FieldImageManager
 
 
 class DocxDocument:
@@ -32,6 +33,7 @@ class DocxDocument:
             self.text_to_image_manager = TextToImageManager(self.docx)
             self.field_checkbox_manager = FieldCheckboxManager(self.docx)
             self.field_text_manager = FieldTextManager(self.docx)
+            self.field_image_manager = FieldImageManager(self.docx)
     
     # === MÉTODOS DE CHECKBOXES ===
     def get_fields_checkbox(self, includeBody=True, includeHeaders=True, includeFooters=True):
@@ -144,6 +146,36 @@ class DocxDocument:
             bool: True si se modificó correctamente, False si hubo error
         """
         return self.field_text_manager.set_field_text_value(text_field_obj, value)
+    
+    # === MÉTODOS DE CAMPOS DE IMAGEN ===
+    def get_fields_image(self, includeBody=True, includeHeaders=True, includeFooters=True):
+        """
+        Encuentra todos los campos de imagen en el documento
+        
+        Args:
+            includeBody: Buscar en el cuerpo del documento
+            includeHeaders: Buscar en headers
+            includeFooters: Buscar en footers
+        
+        Returns:
+            List[FieldImage]: Lista de objetos campo de imagen encontrados
+        """
+        return self.field_image_manager.get_fields_image(includeBody, includeHeaders, includeFooters)
+    
+    def set_field_image_value(self, image_field_obj, image_data: bytes, width: int, height: int):
+        """
+        Inserta una imagen en un campo de imagen específico
+        
+        Args:
+            image_field_obj: Objeto FieldImageModern o FieldImageLegacy
+            image_data: Bytes de la imagen
+            width: Ancho en píxeles
+            height: Alto en píxeles
+        
+        Returns:
+            bool: True si se insertó correctamente, False si hubo error
+        """
+        return self.field_image_manager.set_field_image_value(image_field_obj, image_data, width, height)
     
     # === MÉTODOS DEL DOCUMENTO ===
     def save_to_file(self, file_path):

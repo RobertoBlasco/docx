@@ -6,7 +6,7 @@ import io
 from docx.shared import Inches
 from docx.oxml.ns import qn
 from .base_manager import BaseManager
-from models import text_image_replacement as text_image_replacement
+from models import text_to_image_model as text_image_replacement
 
 
 class TextToImageManager(BaseManager):

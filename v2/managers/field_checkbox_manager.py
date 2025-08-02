@@ -5,7 +5,7 @@ Manager para gestionar checkboxes (legacy y modern) en documentos Word
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 from .base_manager import BaseManager
-from models import form_checkbox as form_checkbox
+from models import field_checkbox_model as form_checkbox
 
 
 class FieldCheckboxManager(BaseManager):

@@ -21,9 +21,20 @@
         <xs:simpleContent>
             <xs:extension base="xs:string">
                 <xs:attribute name="overwrite" type="xs:boolean" default="false"/>
+                <xs:attribute name="outType" type="OutTypeEnum" use="required"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <!-- Enumeración para tipos de salida -->
+    <xs:simpleType name="OutTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="file"/>
+            <xs:enumeration value="FILE"/>
+            <xs:enumeration value="base64"/>
+            <xs:enumeration value="BASE64"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <!-- Tipo para imágenes -->
     <xs:complexType name="ImagesType">
@@ -64,6 +75,7 @@
             <xs:enumeration value="replaceTextWithImage"/>
             <xs:enumeration value="setFieldCheckbox"/>
             <xs:enumeration value="setFieldText"/>
+            <xs:enumeration value="setFieldImage"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -79,6 +91,10 @@
 
     <xs:complexType name="FormType" mixed="true">
         <xs:sequence>
+            <!-- Elementos opcionales para setFieldImage -->
+            <xs:element name="imgId" type="xs:string" minOccurs="0"/>
+            <xs:element name="width" type="xs:positiveInteger" minOccurs="0"/>
+            <xs:element name="height" type="xs:positiveInteger" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" use="optional"/>
         <xs:attribute name="tag" type="xs:string" use="optional"/>
